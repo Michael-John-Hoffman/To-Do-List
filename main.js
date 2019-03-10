@@ -2,6 +2,7 @@ let state = {
     "taskIdIncrement": 0,
     "listIdIncrement": 0,
     "lists": [{
+        "name": '',
         "id": 1,
         "tasks": [{
             "id": '1-1',
@@ -25,6 +26,7 @@ let state = {
         }
     ]
     }, {
+        "name": '',
         "id": 2,
         "tasks": []
     }
@@ -48,6 +50,10 @@ function deleteTask(id){
     let taskElement = $(`#${id}`)
     taskElement.remove();
 }
+function AddList(){
+    let lists = $('.lists');
+    
+}
 // adding addTaskButton
 function addTask(listElement, task){
         
@@ -66,7 +72,7 @@ function addTask(listElement, task){
         deleteTask(task.id);
        })
     taskElement.append(deleteButton);
-    taskElement.append(`<div clas="completeTask"><input></input></div>`);
+    taskElement.append(`<div class="completeTask"><input></input></div>`);
     let input = taskElement.find('input');
     input.val(task.description); console.log(task); console.log(taskElement);
      listElement.append(taskElement);
@@ -74,9 +80,10 @@ function addTask(listElement, task){
 
 $( document ).ready(function() { console.log('ready');
    let lists = $('.lists'); console.log(lists);
-    let emptyList = $('<div class="lists"></div>')
     state.lists.forEach(list => {
-       let listElement = emptyList.clone()
+       let listElement = $('<div class="list"></div>')
+       let listName = $(`<div class="completeTask">List Name<input></input></div>`);
+       listElement.append(listName);
        list.tasks.forEach(task => {
            addTask(listElement, task)
         }) 
@@ -93,8 +100,22 @@ $( document ).ready(function() { console.log('ready');
        })
     })
 
-
-
+    let addListButton = $(`#addList`);
+    addListButton.click(event => {
+        let listElement = $('<div class="list"></div>')
+        let addTaskButton = $(`<button type="button" class="btn btn-secondary">Add Task</button>`);
+       listElement.append(addTaskButton);
+       addTaskButton.click(event => {
+           let taskId = state.taskIdIncrement++
+           let task = {"id": taskId,
+           "completed": false,
+           "deteted": false,
+           "description": ""}
+           addTask(listElement, task);
+       })
+       lists.append(listElement);
+    })
+    
 });
 
 

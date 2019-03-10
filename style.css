@@ -10,3 +10,10 @@
    
     background: rgb(166, 206, 201);
 }
+
+.list{
+    border: 1px solid;
+    padding: 12px;
+    margin: 12px;
+
+}

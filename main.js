@@ -34,10 +34,14 @@ let state = {
 function completeTask(id){
     let taskElement = $(`#${id}`)
     let input = taskElement.find('input');
-    input.prop("disabled", true);
-    input.addClass("done");
+    let text = $('<div></div>')
+    text.text(input.val())
+    input.replaceWith(text)
     let deleteButton = taskElement.find('.delete');
     deleteButton.remove();
+    let completeButton = taskElement.find('.complete');
+    completeButton.remove();
+    taskElement.addClass("done")
 
 }
 function deleteTask(id){
@@ -49,7 +53,7 @@ function addTask(listElement, task){
         
     let taskElement = $('<div class="task"></div>');
     taskElement.attr("id", task.id); 
-    let completeButton = $(`<button type="button" class="btn btn-primary">Complete</button>`);
+    let completeButton = $(`<button type="button" class="btn complete btn-primary">Complete</button>`);
     completeButton.click(event => {
      completeTask(task.id)
      

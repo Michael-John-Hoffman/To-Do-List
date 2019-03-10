@@ -38,7 +38,7 @@ $( document ).ready(function() { console.log('ready');
        list.tasks.forEach(task => {
            let taskElement = emptyTask.clone()
            taskElement.append(`<button type="button" class="btn btn-primary">Complete</button>`);
-           taskElement.append(`<div clas="completeTask><input></input></div>`);
+           taskElement.append(`<div clas="completeTask"><input></input></div>`);
            let input = taskElement.find('input');
            input.val(task.description); console.log(task); console.log(taskElement);
             listElement.append(taskElement);

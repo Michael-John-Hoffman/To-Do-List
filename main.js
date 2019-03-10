@@ -1,4 +1,6 @@
 let state = {
+    "taskIdIncrement": 0,
+    "listIdIncrement": 0,
     "lists": [{
         "id": 1,
         "tasks": [{
@@ -34,30 +36,46 @@ function completeTask(id){
     let input = taskElement.find('input');
     input.prop("disabled", true)
 }
+// adding addTaskButton
+function addTask(listElement, task){
+        
+    let taskElement = $('<div class="task"></div>')
+    taskElement.attr("id", task.id); 
+    let completeButton = $(`<button type="button" class="btn btn-primary">Complete</button>`);
+    completeButton.click(event => {
+     completeTask(task.id)
+    })
+
+    taskElement.append(completeButton);
+    taskElement.append(`<button type="button" class="btn btn-secondary">Delete</button>`);
+    taskElement.append(`<div clas="completeTask"><input></input></div>`);
+    let input = taskElement.find('input');
+    input.val(task.description); console.log(task); console.log(taskElement);
+     listElement.append(taskElement);
+}
 
 $( document ).ready(function() { console.log('ready');
    let lists = $('.lists'); console.log(lists);
     let emptyList = $('<div class="lists"></div>')
-    let emptyTask = $('<div class="task"></div>')
     state.lists.forEach(list => {
        let listElement = emptyList.clone()
        list.tasks.forEach(task => {
-           let taskElement = emptyTask.clone()
-           taskElement.attr("id", task.id); 
-           let completeButton = $(`<button type="button" class="btn btn-primary">Complete</button>`);
-           completeButton.click(event => {
-            completeTask(task.id)
-           })
-
-           taskElement.append(completeButton);
-           taskElement.append(`<button type="button" class="btn btn-secondary">Delete</button>`);
-           taskElement.append(`<div clas="completeTask"><input></input></div>`);
-           let input = taskElement.find('input');
-           input.val(task.description); console.log(task); console.log(taskElement);
-            listElement.append(taskElement);
+           addTask(listElement, task)
         }) 
        lists.append(listElement);
+       let addTaskButton = $(`<button type="button" class="btn btn-secondary">Add Task</button>`);
+       listElement.append(addTaskButton);
+       addTaskButton.click(event => {
+           let taskId = state.taskIdIncrement++
+           let task = {"id": taskId,
+           "completed": false,
+           "deteted": false,
+           "description": ""}
+           addTask(listElement, task);
+       })
     })
+
+
 
 });
 

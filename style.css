@@ -1,5 +1,13 @@
-.completeTaskButton{
-    width: 30px;
-    height: 30px;
-    border: 1px solid black;
+
+.task{
+    padding: 12px;
+    border: solid 1px grey;
+    border-radius: 5px;
+    margin: 12px
+}
+
+.done{
+    border: none;
+    outline: none;
+    background: rgb(166, 206, 201);
 }

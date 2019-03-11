@@ -2,7 +2,7 @@ let state = {
     "taskIdIncrement": 0,
     "listIdIncrement": 0,
     "lists": [{
-        "name": '',
+        "name": 'things',
         "id": 1,
         "tasks": [{
             "id": '1-1',
@@ -26,7 +26,7 @@ let state = {
         }
     ]
     }, {
-        "name": '',
+        "name": 'stuff',
         "id": 2,
         "tasks": []
     }
@@ -50,10 +50,13 @@ function deleteTask(id){
     let taskElement = $(`#${id}`)
     taskElement.remove();
 }
-function AddList(){
-    let lists = $('.lists');
-    
+
+function deleteList(id){
+    let listElement = $(`#${id}`)
+    listElement.remove();
 }
+
+
 // adding addTaskButton
 function addTask(listElement, task){
         
@@ -82,12 +85,15 @@ $( document ).ready(function() { console.log('ready');
    let lists = $('.lists'); console.log(lists);
     state.lists.forEach(list => {
        let listElement = $('<div class="list"></div>')
-       let listName = $(`<div class="completeTask">List Name<input></input></div>`);
+       let listName = $(`<div></div>`);
+       listName.text(list.name);
        listElement.append(listName);
        list.tasks.forEach(task => {
            addTask(listElement, task)
         }) 
        lists.append(listElement);
+       
+
        let addTaskButton = $(`<button type="button" class="btn btn-secondary">Add Task</button>`);
        listElement.append(addTaskButton);
        addTaskButton.click(event => {
@@ -102,9 +108,17 @@ $( document ).ready(function() { console.log('ready');
 
     let addListButton = $(`#addList`);
     addListButton.click(event => {
+        let listId = state.listIdIncrement++
         let listElement = $('<div class="list"></div>')
         let addTaskButton = $(`<button type="button" class="btn btn-secondary">Add Task</button>`);
+        let deleteListButton = $(`<button type="button" class="btn btn-secondary">Delete</button>`);
+        let saveListName = $(`<button type="button" class="btn btn-secondary">Save</button>`);
+        listElement.attr("id", listId)
        listElement.append(addTaskButton);
+       listElement.append(deleteListButton);
+       deleteListButton.click(event => {
+           deleteList(listId)
+       })
        addTaskButton.click(event => {
            let taskId = state.taskIdIncrement++
            let task = {"id": taskId,
@@ -114,6 +128,13 @@ $( document ).ready(function() { console.log('ready');
            addTask(listElement, task);
        })
        lists.append(listElement);
+       let listName = $(`<div class="completeTask">List Name<input></input></div>`);
+       listElement.append(listName);
+       listElement.append(saveListName);
+        let input = listName.find('input');
+        let text = $('<div></div>')
+        text.text(input.val())
+        input.replaceWith(text)
     })
     
 });

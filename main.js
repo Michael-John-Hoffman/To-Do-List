@@ -112,7 +112,7 @@ $( document ).ready(function() { console.log('ready');
         let listElement = $('<div class="list"></div>')
         let addTaskButton = $(`<button type="button" class="btn btn-secondary">Add Task</button>`);
         let deleteListButton = $(`<button type="button" class="btn btn-secondary">Delete</button>`);
-        let saveListName = $(`<button type="button" class="btn btn-secondary">Save</button>`);
+        
         listElement.attr("id", listId)
        listElement.append(addTaskButton);
        listElement.append(deleteListButton);
@@ -129,12 +129,16 @@ $( document ).ready(function() { console.log('ready');
        })
        lists.append(listElement);
        let listName = $(`<div class="completeTask">List Name<input></input></div>`);
+       let saveListName = $(`<button type="button" class="btn btn-secondary">Save</button>`);
        listElement.append(listName);
        listElement.append(saveListName);
+       saveListName.click(event => {
         let input = listName.find('input');
         let text = $('<div></div>')
         text.text(input.val())
-        input.replaceWith(text)
+        listName.replaceWith(text) 
+        saveListName.remove();
+       })
     })
     
 });
